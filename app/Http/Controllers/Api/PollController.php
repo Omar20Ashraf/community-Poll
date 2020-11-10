@@ -17,15 +17,6 @@ class PollController extends Controller
     	return response()->json(Poll::get(),200);
     }
 
-    public function show(Poll $poll)
-    {
-    	# code...
-
-    	$response = new PollResource($poll);
-
-    	return response()->json($response,200);
-    }
-
     public function store(Request $request)
     {
     	# code...
@@ -41,6 +32,16 @@ class PollController extends Controller
     	$poll = Poll::create($request->all());
 
     	return response()->json($poll,201);
+    }
+
+    public function show($id)
+    {
+    	# code...
+    	$poll = Poll::with('questions')->findOrFail($id);
+    	
+    	$response = new PollResource($poll);
+
+    	return response()->json($response,200);
     }
 
     public function update(Request $request,Poll $poll)
@@ -63,5 +64,11 @@ class PollController extends Controller
     {
     	# code...
     	return response()->json(['message' => 'required'],501);
+    }
+
+    public function questions(Poll $poll)
+    {
+    	# code...
+    	return response()->json($poll->questions,200);
     }
 }

@@ -13,3 +13,4 @@ Route::get('polls/{poll}','Api\PollController@show');
 Route::post('polls','Api\PollController@store');
 Route::put('polls/{poll}','Api\PollController@update');
 Route::delete('polls/{poll}','Api\PollController@delete');
+Route::any('errors', 'Api\PollController@errors');
